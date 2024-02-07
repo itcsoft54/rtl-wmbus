@@ -826,7 +826,7 @@ static void print_usage(const char *program_name)
     fprintf(stdout, "\t-V show version\n");
     fprintf(stdout, "\t-s receive S1 and T1/C1 datagrams simultaneously. rtl_sdr _MUST_ be set to 868.625MHz (-f 868.625M)\n");
     fprintf(stdout, "\t-p [T,S] to disable processing T1/C1 or S1 mode.\n");
-    fprintf(stdout, "\t-f exit if flow of incoming data stops.\n");
+    fprintf(stdout, "\t-f exit if incoming data stalled for 5 seconds.\n");
     fprintf(stdout, "\t-h print this help\n");
 }
 
@@ -1157,7 +1157,7 @@ void s1_signal_chain_empty(float i_s1, float q_s1,
 }
 
 #if CHECK_FLOW == 1
-#define START_ALARM if (opts_check_flow) { alarm(2); }
+#define START_ALARM if (opts_check_flow) { alarm(5); }
 #define STOP_ALARM if (opts_check_flow) { alarm(0); }
 
 static void sig_alarm_handler(int signo)
